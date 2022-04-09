@@ -20,10 +20,10 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-        form_login:
-            login_path: login
-            check_path: login
-            enable_csrf: true
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                enable_csrf: true
             
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
