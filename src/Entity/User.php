@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -36,6 +38,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity=UserRecord::class, mappedBy="fk_user", orphanRemoval=true)
+     */
+    private $userRecords;
+
+    public function __construct()
+    {
+        $this->userRecords = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -124,5 +136,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, UserRecord>
+     */
+    public function getUserRecords(): Collection
+    {
+        return $this->userRecords;
+    }
+
+    public function addUserRecord(UserRecord $userRecord): self
+    {
+        if (!$this->userRecords->contains($userRecord)) {
+            $this->userRecords[] = $userRecord;
+            $userRecord->setFkUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRecord(UserRecord $userRecord): self
+    {
+        if ($this->userRecords->removeElement($userRecord)) {
+            // set the owning side to null (unless already changed)
+            if ($userRecord->getFkUser() === $this) {
+                $userRecord->setFkUser(null);
+            }
+        }
+
+        return $this;
     }
 }
