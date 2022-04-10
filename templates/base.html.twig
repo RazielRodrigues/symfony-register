@@ -26,7 +26,7 @@
 	<body>
 
 		<nav class="navbar navbar-expand-lg navbar-white bg-white">
-			<a class="navbar-brand" href="{{path('app_home')}}">
+			<a class="navbar-brand" href="{{path('app_index')}}">
 				<img width="30" height="30" src="{{ absolute_url(asset('assets/images/logo.jpg')) }}" class="d-inline-block align-top" alt=""/>
 				<span class="text-dark">You speech we write</span>
 			</a>
@@ -42,13 +42,16 @@
 						{# <a class="nav-link" href="{{path('app_logout')}}">Logout <i class="fab fa-facebook"></i> </a> #}
 						
 						{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-							<span class="nav-link btn btn-outline-primary">
+							<a class="nav-link btn btn-outline-success" href="{{path('app_home')}}">
 								{{app.user.username}}
-							</span>
-							<a class="nav-link btn btn-outline-secondary" href="{{path('app_logout')}}">
+							</a>
+							<a class="nav-link btn btn-outline-info" href="{{path('app_logout')}}">
 								Logout
 							</a>
 						{% else %}
+							<a class="nav-link btn btn-outline-success" href="{{path('app_login')}}">
+								Login
+							</a>
 							<a class="nav-link btn btn-outline-info" href="{{path('app_register')}}">
 								Create account
 							</a>

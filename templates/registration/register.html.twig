@@ -4,50 +4,26 @@
 
 {% block body %}
 
+    {# <h3 class="text-center">Are you ready to transform your voice in text ?</h3> #}
+
 	<section class="fdb-block">
+
 		<div class="container">
-        
-            {# {% if error %}
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            {% endif %} #}
-        
+
         	<div class="row justify-content-center">
-                <form action="{{ path('app_login') }}" method="post">
 
-                    <div class="form-group">
-                        <label for="username">Email address</label>
-                        {# <input name="_username" value="{{ last_username }}" type="email" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter email"> #}
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Password" name="_password">
-                    </div>
+                {{ form_start(registrationForm) }}
+                    {{ form_row(registrationForm.email) }}
+                    {{ form_row(registrationForm.plainPassword, {
+                        label: 'Password'
+                    }) }}
+                    <button type="submit" class="btn btn-info form-control">Register</button>
+                    {{ form_row(registrationForm.agreeTerms) }}
+                {{ form_end(registrationForm) }}
 
-                    <input type="hidden" name="app_home" value="/home"/> 
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-                    <button type="submit" class="btn btn-primary col-12">Login</button>
-                </form>
 			</div>
 
 		</div>
 	</section>
 
-    <h1>Register</h1>
-
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
 {% endblock %}
