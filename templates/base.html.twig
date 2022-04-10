@@ -1,20 +1,113 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>You speech we write - {% block title %}{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {# {{ asset('css/app.css') }} #}
-        {% endblock %}
+	<head>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
 
-        {% block javascripts %}
-            {# {{ asset('js/app.js') }} #}
-        {% endblock %}
-    </head>
-    <body>
-        <main>
-                {% block body %}{% endblock %}
-        </main>
-    </body>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+
+		<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/froala-design-blocks/2.0.0/css/froala_blocks.min.css">
+		<title>You speech we write -
+			{% block title %}{% endblock %}
+		</title>
+		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+		{% block stylesheets %}
+			{# {{ asset('css/app.css') }} #}
+		{% endblock %}
+
+		{% block javascripts %}
+			{# {{ asset('js/app.js') }} #}
+		{% endblock %}
+	</head>
+
+	<body>
+
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="#">
+				You speech we write
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav col-5">
+					<li class="nav-item active">
+						<a class="nav-link" href="#">Home</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="#contact">Logout</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="#features">Features</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="#contact">Contact</a>
+					</li>
+				</ul>
+				<ul class="navbar-nav justify-content-end col-sm-5 order-lg-12 d-none d-md-flex">
+					<li class="nav-item">
+						<a class="nav-link" target="blank" href="https://www.linkedin.com/in/raziel-rodrigues-2b32b5140/">
+							<i class="fab fa-linkedin"></i>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" target="blank" href="https://github.com/RazielMiranda">
+							<i class="fab fa-github"></i>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" target="blank" href="https://www.facebook.com/raziel.mirandarodrigues">
+							<i class="fab fa-facebook"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+
+		<header class="bg-dark">
+			<div class="container">
+				<nav class="navbar navbar-expand-md no-gutters">
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav2" aria-controls="navbarNav2" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+
+					<div class="col-4 col-md-2 text-right text-md-center order-lg-6"></div>
+
+					<div class="collapse navbar-collapse col-12 col-md-5 order-lg-1" id="navbarNav2"></div>
+
+
+				</nav>
+			</div>
+		</header>
+
+
+		<main>
+			{% block body %}{% endblock %}
+		</main>
+
+
+		<footer id="contact" class="fdb-block footer-small bg-dark">
+			<div class="container">
+				<div class="row text-center align-items-center">
+					<div class="col">
+						<p class="h5 mt-1">Raziel Miranda Rodrigues - 2019</p>
+						<p class="h5 mt-1">
+							<a href="https://api.whatsapp.com/send?phone=5511983572704">+55 11 98357-2704
+							</a>
+							|
+							<a href="mailto:razielx3@live.com">razielx3@live.com</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		<script src="{{ absolute_url(asset('assets/js/main.js')) }}"></script>
+	</body>
 </html>
