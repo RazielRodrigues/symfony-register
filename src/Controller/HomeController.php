@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\UserRecord;
 use App\Repository\UserRecordRepository;
+use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,8 +26,21 @@ class HomeController extends AbstractController
      */
     public function create(Request $request): Response
     {
+        $requestBody = $request->request->all();
+
+        $userRecord = new UserRecord();
+        $userRecord->setName('record-' . (new \DateTime('now'))->format('Y-m-d H:i:s'));
+        $userRecord->setRecord($requestBody['result-speech']);
+
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+        $status = $user->addUserRecord($userRecord);
+
+        $this->getDoctrine()->getManager()->persist($userRecord);
+        $this->getDoctrine()->getManager()->flush();
+
         return $this->json([
-            $request,
+            'status' => $status,
             'message' => 'save success',
         ], 200);
     }
@@ -52,7 +67,7 @@ class HomeController extends AbstractController
     {
         return $this->json([
             $request,
-            'message' => 'update success',
+            'message' => 'update success'
         ], 200);
     }
 
@@ -63,7 +78,7 @@ class HomeController extends AbstractController
     {
         return $this->json([
             $request,
-            'message' => 'delete success',
+            'message' => 'delete success'
         ], 200);
     }
 

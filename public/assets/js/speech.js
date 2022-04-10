@@ -1,56 +1,42 @@
-window.onload = function(){
+const recognition = new webkitSpeechRecognition();
 
-	var recognition = new webkitSpeechRecognition();
-	recognition.lang = "pt-BR";
-	recognition.continuous = true;
+const newRecordButton = document.getElementById('new-record');
+const saveRecordForm = document.getElementById('save-record');
+const saveRecordButton = document.getElementById('save-record-button');
+const resultArea = document.getElementById('result');
 
+recognition.lang = "pt-BR";
+recognition.continuous = true;
 
-	recognition.onresult = function(event){
-
-		var busca = "";
-		for (var i = event.resultIndex; i < event.results.length; i++) {
-
-			if (event.results[i].isFinal){
-				busca += event.results[i][0].transcript.trim().toLowerCase();
-			}
+speech = () => {
+	recognition.onresult = function(e){
+		for (var i = e.resultIndex; i < e.results.length; i++) {
+			(e.results[i].isFinal) ? resultArea.value += e.results[i][0].transcript.trim().toLowerCase(): '' ;
 		}
-
-		if (busca.indexOf("buscar por") > -1) {
-
-			busca = busca.substring(11,busca.length);
-
-			let url = "https://www.google.com/search?q=" + busca;
-
-			window.open(url);
-
-		}else{
-
-			busca = busca.split(" ").join("+")
-			let api_key = "IuFzLL4qAtOzICPwH4CRpTIygyE8y4ms";
-			let url = "https://api.giphy.com/v1/gifs/search?q="+busca+"&api_key="+api_key+"&limit=5";
-			var xhr = $.get(url);
-
-			xhr.done(function(result){
-				console.log(result);
-				let qtd = result.data.length;
-
-				if (qtd > 0) {
-
-					let  numero = Math.floor(Math.random() * qtd);
-					let image_url = result.data[numero].images.downsized.url;
-					 document.getElementById("img_result").src = image_url;
-
-				}
-
-			});
-
-		}
-
-		document.getElementById('result').innerHTML = busca;
-
 	}
-
 	recognition.start();
-
-
+	saveRecordButton.classList.remove('d-none');
 }
+
+saveSpeech = (e) => {
+	e.preventDefault();
+	recognition.stop();
+
+	let form = new FormData(saveRecordForm);
+
+	fetch("/create-record", {
+		method: "POST",
+		body: form
+	})
+	.then(res => res.json())
+    .then(response => {
+		console.log(response);
+    })
+    .catch(err => {
+        alert(err)
+    });;
+	
+}
+
+newRecordButton.addEventListener('click', speech);
+saveRecordForm.addEventListener('submit', saveSpeech);
