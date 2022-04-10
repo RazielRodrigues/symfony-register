@@ -28,6 +28,8 @@ class HomeController extends AbstractController
     {
         $requestBody = $request->request->all();
 
+        if (empty($requestBody['result-speech'])) return $this->json(['message' => 'Please provide some text'], 500);
+
         $userRecord = new UserRecord();
         $userRecord->setName('record-' . (new \DateTime('now'))->format('Y-m-d H:i:s'));
         $userRecord->setRecord($requestBody['result-speech']);
@@ -39,10 +41,7 @@ class HomeController extends AbstractController
         $this->getDoctrine()->getManager()->persist($userRecord);
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->json([
-            'status' => $status,
-            'message' => 'save success',
-        ], 200);
+        return $this->json(['message' => 'save success'], 200);
     }
 
     /**
